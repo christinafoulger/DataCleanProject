@@ -70,4 +70,4 @@ fit$Activity <-factor(fit$Activity, labels=activitylabels)
                                                                                                                                        
 ##Create output table
 
-write.table(fit,file=".\tidydata.txt",sept"\",row.names=FALSE)
+write.table(fit, file="tidydata.txt",,,sep"\",,,row.names=FALSE, col.names = TRUE)
