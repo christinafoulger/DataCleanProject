@@ -31,16 +31,16 @@ features <-read.table(paste(datadir,"features.txt", sep='/'))[,2]
 
 ##Read data sets and combine train and test
 
-xtestfit <-read.table(paste(datadir,"test/X_test.txt",sep="/")
-xtrainfit <-read.table(paste(datadir,"train/X_train.txt", sep="/")
+xtestfit <-read.table(paste(datadir,"test/X_test.txt",sep="/"))
+xtrainfit <-read.table(paste(datadir,"train/X_train.txt",sep="/"))
 x<- rbind(xtestfit, xtrainfit)    
                                              
-stestfit <-read.table(paste(datadir,"test/subject_test.txt",sep="/")
-strainfit <-read.table(paste(datadir,"train/subject_train.txt", sep="/")
+stestfit <-read.table(paste(datadir,"test/subject_test.txt",sep="/"))
+strainfit <-read.table(paste(datadir,"train/subject_train.txt", sep="/"))
 s<- rbind(stestfit, strainfit)    
                                                                                           
-ytestfit <-read.table(paste(datadir,"test/y_test.txt",sep="/")
-ytrainfit <-read.table(paste(datadir,"train/y_train.txt", sep="/")
+ytestfit <-read.table(paste(datadir,"test/Y_test.txt",sep="/"))
+ytrainfit <-read.table(paste(datadir,"train/Y_train.txt", sep="/"))
 y<- rbind(ytestfit, ytrainfit)  
                                                                                                                                        
 ##Assign the features to x
@@ -51,7 +51,7 @@ names(x)<-headers
 ##create vector for mean or std features
 ##meanstd_features will have to much, so we will extrad just the mean and std deviations 
 
-meanstd_features<-grepl("mean\\(\\)?std\\(\\)",features)
+meanstd_features<-grepl("mean\\(\\)|std\\(\\)",features)
 x<-x[,meanstd_features]
                                                                                                                                        
 ##combine into one data frame
@@ -62,12 +62,12 @@ names(combined)[2]<-"Activity"
                                                                                                                                        
 ##Aggregate function provides data set required
 
-fit <-aggregate(.~SubjectID+Activity,data=combined,FUN=mean)
+fit<-aggregate(.~SubjectID+Activity,data=combined,FUN=mean)
                                                                                                                                        
 ##Update the activity names
 
-fit$Activity <-factor(fit$Activity, labels=activies)
+fit$Activity <-factor(fit$Activity, labels=activitylabels)
                                                                                                                                        
 ##Create output table
 
-write.table(fit,file="./tidydata.txt",sept"\t",row.names=FALSE)
+write.table(fit,file=".\tidydata.txt",sept"\",row.names=FALSE)
